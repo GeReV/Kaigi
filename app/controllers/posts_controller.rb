@@ -11,16 +11,18 @@ class PostsController < ApplicationController
   end
   
   def create
-    @user = User.find_by_profile_id(@current_user.id);
+    puts @current_user
+    
+    user_details = @graph.get_object('me')
+    
+    @user = User.find_by_profile_id(user_details['id']);
     if @user
       @user.update_attributes({
         :last_known_lat => params[:post][:lat],
-        :last_known_long => paramsp[:post][:long],
+        :last_known_long => params[:post][:long],
         :last_seen_time => Time.now
       })
-    else
-      user_details = @graph.get_object('me')
-      
+    else      
       @user = User.new({
         :profile_id => user_details['id'],
         :profile_link => user_details['link'],
@@ -31,9 +33,9 @@ class PostsController < ApplicationController
         :last_known_long => params[:post][:long],
         :last_seen_time => Time.now
       })
-      
-      @user.save
     end
+    
+    @user.save
     
     @post = Post.new(params[:post])
     @post.user = @user

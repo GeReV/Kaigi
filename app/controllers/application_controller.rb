@@ -6,7 +6,12 @@ class ApplicationController < ActionController::Base
 protected
   
   def init_fb
-    @oauth = Koala::Facebook::OAuth.new(APP_CONFIG['app_id'], APP_CONFIG['app_secret'], APP_CONFIG['callback_url'])   
-    @graph = Koala::Facebook::API.new(@oauth.get_user_info_from_cookies(cookies)['access_token'])
+    @oauth = Koala::Facebook::OAuth.new(APP_CONFIG['app_id'], APP_CONFIG['app_secret'], APP_CONFIG['callback_url']) 
+    user_info = @oauth.get_user_info_from_cookies(cookies)
+    
+    if (user_info)
+      @graph = Koala::Facebook::API.new(user_info['access_token'])
+      @current_user = @oauth.get_user_info_from_cookies(cookies)
+    end
   end
 end
