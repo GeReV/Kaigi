@@ -1,2 +1,15 @@
 #map
+#feed
+  #post
+    = form_for(@post, :url => { :action => :create, :controller => :posts }, :remote => true) do |f|
+      = f.text_area(:text, :size => '50x2')
+      = f.hidden_field(:lat, :value => '')
+      = f.hidden_field(:long, :value => '')
+      = f.submit('Send')
+  #updates
+    - @posts.each do |post|
+      .post
+        %a{ :href => post.user.profile_link }
+          %img{ :src => "//graph.facebook.com/#{post.user.profile_id}/picture", :alt => post.user.profile_name }
+        = post.text
 

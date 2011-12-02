@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111202141118) do
+ActiveRecord::Schema.define(:version => 20111202163835) do
 
   create_table "posts", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -33,9 +33,10 @@ ActiveRecord::Schema.define(:version => 20111202141118) do
     t.datetime "last_seen_time",  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "profile_name",    :null => false
   end
 
   add_index "users", ["last_seen_time"], :name => "index_users_on_last_seen_time"
-  add_index "users", ["profile_id"], :name => "index_users_on_profile_id"
+  add_index "users", ["profile_id"], :name => "index_users_on_profile_id", :unique => true
 
 end
