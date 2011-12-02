@@ -5,7 +5,7 @@ gem 'rails', '3.1.1'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'mysql'
 
 gem 'json'
 
@@ -16,7 +16,7 @@ require 'v8' unless RUBY_PLATFORM =~ /mswin32|32$/
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.1.4'
-  gem 'coffee-rails', '~> 3.1.1'
+  #gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier', '>= 1.0.3'
 end
 
