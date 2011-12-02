@@ -1,0 +1,54 @@
+!!! 5
+<!--[if lt IE 7]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7]> <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8]> <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if gt IE 8]><!-->
+%html.no-js{ :lang => "en" }
+  <!--<![endif]-->
+  %head
+    %meta{ :charset => "utf-8" }/
+    
+    %meta{ "http-equiv" => "X-UA-Compatible", :content => "IE=edge,chrome=1" }/
+    
+    %title Kaigi
+    %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }/
+      
+    = stylesheet_link_tag("application")
+    = javascript_include_tag("modernizr-2.0.6")
+    = csrf_meta_tags
+    
+  %body
+    #fb-root
+    
+    =yield
+    
+    .fb-login-button{ "data-perms" => "email,user_checkins" }
+      Login with Facebook
+      
+    %script{ :src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js" }
+    :javascript
+      window.jQuery || document.write("<script src=\"assets/javascript/jquery.min.js\"><\/script>")
+    
+    = javascript_include_tag("application")
+    
+    :javascript
+      //window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+      //Modernizr.load({
+      //  load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+      //});
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '259252477464330',
+          status     : true, 
+          cookie     : true,
+          xfbml      : true
+        });
+      };
+      Modernizr.load({
+        load: '//connect.facebook.net/en_US/all.js'
+      });
+      
+    /[if lt IE 7 ]
+      <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+      <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+    /[endif]

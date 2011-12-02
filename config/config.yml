@@ -1,0 +1,4 @@
+development:
+  app_id: 259252477464330
+  app_secret: a099b08607ffc2394eb8cb8e134a8bc3
+  callback_url: http://kaigi.com
