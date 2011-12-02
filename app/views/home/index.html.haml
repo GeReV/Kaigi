@@ -8,7 +8,7 @@
       = f.submit('Send')
   #updates
     - @posts.each do |post|
-      .post
+      .post.clearfix
         %a{ :href => post.user.profile_link }
           %img{ :src => "//graph.facebook.com/#{post.user.profile_id}/picture", :alt => post.user.profile_name }
         = post.text

@@ -37,8 +37,14 @@
   }
 }(document));
 
-$('form').bind('ajax:success', function(result) {
+$('form').bind('ajax:success', function(e, result) {
   FB.api('/me', function(response) {
-    $('#posts').append('<div class="post"><img src="//graph.facebook.com/' + response.id + '/picture" alt="' + response.name + '" /><p>' + result.text + '</p></div>');
+    if (response.id) {
+      var post = $('<div class="post clearfix"><img src="//graph.facebook.com/' + response.id + '/picture" alt="' + response.name + '" />' + result.text + '</div>');
+      
+      $('#post_text').val('');
+            
+      post.hide().prependTo($('#updates')).slideDown('slow');
+    }
   });
 });
