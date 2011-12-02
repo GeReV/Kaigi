@@ -22,9 +22,10 @@
     
     =yield
     
-    .fb-login-button{ "data-perms" => "email,user_checkins" }
+    .fb-login-button{ "data-perms" => "email,user_checkins,user_hometown" }
       Login with Facebook
       
+    %script{ :src => "//maps.googleapis.com/maps/api/js?sensor=true&amp;region=IL" }
     %script{ :src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js" }
     :javascript
       window.jQuery || document.write("<script src=\"assets/javascript/jquery.min.js\"><\/script>")
