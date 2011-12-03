@@ -2,8 +2,7 @@
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
- *= require_self
- *= require_tree . 
+ *
 */
 /* HTML5 ✰ Boilerplate
  * ==|== normalize ==========================================================
@@ -77,36 +76,41 @@ td { vertical-align: top; }
 	padding: 1em;
 	width: 1024px;
 }
+
 #map {
-	float: left;
-	margin-right: .5em;
-	padding: .5em;
+  border-radius: 5px;
+  float: left;
+  margin-right: 5px;
+  padding: 5px;
+  width: 600px;
+  height: 600px;
 }
 #feed {
-	overflow: hidden;
-	padding: .5em;
+  overflow: hidden;
+  padding: 5px;
+  height: 590px;
 }
 #post {
-	border-bottom: 1px solid #551A8B;
-	padding-bottom: .5em;
+  border-bottom: 1px solid #551A8B;
+  display: none;
+  padding-bottom: 5px;
 }
 #updates {
-	padding-top: .5em;
-	border-top: 1px solid #999999;
+  padding-top: 5px;
+  border-top: 1px solid #999999;
 }
 .post {
-	
+  
 }
 .post a {
-	display: block;
-	float: left;
-	margin-right: .5em;
+  display: block;
+  float: left;
+  margin-right: 5px;
 }
 
 .fb-login-button {
-	clear: both;
+  clear: both;
 }
-
 
 
 
@@ -159,4 +163,6 @@ td { vertical-align: top; }
   h2, h3 { page-break-after: avoid; }
 }
 
-
+/*= require_self
+ *= require_tree .
+ */ 

@@ -1,53 +1,113 @@
-(function(document) {
+(function(window, document) {
+  
+  var user_info, user_marker;
   
   var myOptions = {
     zoom: 11,
+    center: new google.maps.LatLng(32.066667, 34.783333),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   },
-  map = new google.maps.Map(document.getElementById("map"), myOptions),
+  map = new google.maps.Map($("#map")[0], myOptions),
   watchId;
   
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {  
-      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-          name;
-          
-      setPositionFields(position);
+  Modernizr.load({
+    load: '//connect.facebook.net/en_US/all.js'
+  });
+  
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '259252477464330',
+      status     : true, 
+      cookie     : true,
+      xfbml      : true
+    });
+    
+    FB.api('/me', function(response) {
       
-      FB.api('/me', function(response) {
-        var infowindow = new google.maps.InfoWindow({
-          map: map,
-          position: pos,
-          maxWidth: 60,
-          content: '<img src="//graph.facebook.com/' + response.id + '/picture" alt="' + response.name + '" />'
-        });
-        
-        map.setCenter(pos);
-      });
+      user_info = response;
+      
+      if (navigator.geolocation) {    
+        //watchId = navigator.geolocation.watchPosition(function(position) {
+          
+          var position = { coords: { latitude: 32.066667, longitude: 34.783333 }},
+          
+              pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+          
+              icon = new google.maps.MarkerImage('//graph.facebook.com/' + user_info.id + '/picture',
+                        new google.maps.Size(23, 23), // size
+                        new google.maps.Point(0, 0), // origin
+                        new google.maps.Point(0, 0), // anchor
+                        new google.maps.Size(23, 23)); // scaledSize
+          
+          user_marker = user_marker || new google.maps.Marker({
+            position: pos,
+            map: map,
+            icon: icon
+          });
+          
+          user_marker.setPosition(pos);
+          
+          map.setCenter(pos);
+          
+          setPositionFields(position);
+          updatePosition(position);
+        //}, function() {
+        //  alert('Couldn\'t determine location.');
+        //}, { 'enableHighAccuracy': true, 'maximumAge': 30000, 'timeout': 27000 });
+      }
+      
+      $('#post').slideDown('slow');
     });
     
-    watchId = navigator.geolocation.watchPosition(function(position) {
-      setPositionFields(position);
-    });
     
-    function setPositionFields(position) {
-      $('#post_lat').val(position.coords.latitude);
-      $('#post_long').val(position.coords.longitude);
-    }
-  }
-}(document));
-
-$('form').bind('ajax:success', function(e, result) {
-  FB.api('/me', function(response) {
-    if (response.id) {
-      var post = $('<div class="post clearfix"><img src="//graph.facebook.com/' + response.id + '/picture" alt="' + response.name + '" />' + result.text + '</div>');
+  };
+  
+  $('form').bind('ajax:success', function(e, result) {
+    if (user_info && user_info.id && user_info.name) {
+      var post = $('<div class="post clearfix"><img src="//graph.facebook.com/' + user_info.id + '/picture" alt="' + user_info.name + '" />' + result.text + '</div>');
       
       $('#post_text').val('');
             
       post.hide().prependTo($('#updates')).slideDown('slow');
     }
   });
-});
+  
+  $.getJSON('/home/get_users', function(result) {
+    var i, l, user, icon, marker, pos;
+    
+    for (i = 0, l = result.length; i < l; i++) {
+      user = result[i];
+      
+      icon = new google.maps.MarkerImage(user.profile_pic,
+              new google.maps.Size(23, 23), // size
+              new google.maps.Point(0, 0), // origin
+              new google.maps.Point(0, 0),  // anchor
+              new google.maps.Size(23, 23)); // scaledSize
+      
+      pos = new google.maps.LatLng(user.last_known_lat, user.last_known_long);
+      
+      marker = new google.maps.Marker({
+        position: pos,
+        map: map,
+        icon: icon,
+        title: user.name,
+        zIndex: 2
+      });
+    }
+  });
+    
+  function setPositionFields(position) {
+    $('#post_lat').val(position.coords.latitude);
+    $('#post_long').val(position.coords.longitude);
+  }
+  
+  function updatePosition(position) {
+    $.post('/home/update_location', {
+      'lat': position.coords.latitude,
+      'long': position.coords.longitude
+    });
+  }
+}(window, document));
 
 
 function reset_html(id) {

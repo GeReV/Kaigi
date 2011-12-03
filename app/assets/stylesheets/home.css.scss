@@ -1,6 +1,33 @@
-
 #map {
   border-radius: 5px;
+  float: left;
+  margin-right: .5em;
+  padding: .5em;
   width: 500px;
   height: 500px;
+}
+#feed {
+  overflow: hidden;
+  padding: .5em;
+}
+#post {
+  border-bottom: 1px solid #551A8B;
+  display: none;
+  padding-bottom: .5em;
+}
+#updates {
+  padding-top: .5em;
+  border-top: 1px solid #999999;
+}
+.post {
+  
+}
+.post a {
+  display: block;
+  float: left;
+  margin-right: .5em;
+}
+
+.fb-login-button {
+  clear: both;
 }

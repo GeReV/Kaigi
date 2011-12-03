@@ -22,6 +22,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'remotipart'
+
 gem 'haml'
 
 gem 'koala'

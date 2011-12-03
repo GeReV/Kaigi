@@ -12,7 +12,7 @@
       .post.clearfix
         %a{ :href => post.user.profile_link }
           %img{ :src => "//graph.facebook.com/#{post.user.profile_id}/picture", :alt => post.user.profile_name }
-        = post.text
-    
-    
-
+        = simple_format(post.text)
+        - if post.image
+          %a.thumbnail{ :href => post.image.url(:normal) }
+            %img{ :src => post.image.url(:thumbnail) }
