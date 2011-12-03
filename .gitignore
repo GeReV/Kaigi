@@ -7,4 +7,8 @@ tmp/
 *.pyc
 *.pyo
 
+<<<<<<< HEAD
 public/system
+=======
+public/system/images
+>>>>>>> 23fe59ee9959311e6bff13a67951f2ff46b7471e

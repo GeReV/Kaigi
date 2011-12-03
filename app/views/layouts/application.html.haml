@@ -14,6 +14,7 @@
     %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }/
       
     = stylesheet_link_tag("application")
+    = stylesheet_link_tag("/facebox/facebox.css")
     = javascript_include_tag("modernizr-2.0.6")
     = csrf_meta_tags
     
@@ -31,6 +32,7 @@
       
       %script{ :src => "//maps.googleapis.com/maps/api/js?sensor=true&amp;region=IL" }
       %script{ :src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js" }
+      %script{ :src => "/facebox/facebox.js" }
       :javascript
         window.jQuery || document.write("<script src=\"assets/javascript/jquery.min.js\"><\/script>")
     

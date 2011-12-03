@@ -3,9 +3,9 @@ class PostsController < ApplicationController
   respond_to(:json)
   
   def index
-    last = params[:last].to_i || 0
+    latest = params[:latest].to_i || 0
     
-    @posts = Post.joins(:users).includes(:users).where(['id > ?', last]).limit(15).order('id DESC')
+    @posts = Post.joins(:users).includes(:users).where(['id > ?', latest]).limit(15).order('id DESC')
     
     respond_with(@posts)
   end
@@ -26,6 +26,7 @@ class PostsController < ApplicationController
       if (@post.save)
         
         post = {
+          :id => @post.id,
           :user => @post.user,
           :text => @post.text,
           :lat => @post.lat,

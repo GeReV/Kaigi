@@ -9,14 +9,15 @@
       = f.hidden_field(:long, :value => '')
   #updates
     - @posts.each do |post|
-      .post.clearfix
+      .post.clearfix{ "data-post-id" => post.id }
         %a{ :href => post.user.profile_link }
           %img{ :src => post.user.profile_pic, :alt => post.user.profile_name }
         = post.text
         - if post.image.file?
           .thumb
-            %a.thumbnail{ :class => :poplight, :href => "#?w=500", :rel => :popup_location_image }
+            %a.thumbnail{ :href => post.image.url(:normal), :rel => :facebox }
               %img{ :src => post.image.url(:thumbnail) }
+              
 
 
 %div{:id => :popup_location_image, :class => :popup_block}
