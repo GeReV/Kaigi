@@ -11,9 +11,7 @@ class PostsController < ApplicationController
   end
   
   def create
-    puts @current_user
-    
-    user_details = @graph.get_object('me')
+    user_details = @graph.get_object("me")
     
     @user = User.find_by_profile_id(user_details['id']);
     if @user
@@ -28,7 +26,7 @@ class PostsController < ApplicationController
         :profile_link => user_details['link'],
         :profile_name => user_details['name'],
         :profile_pic => "//graph.facebook.com/#{user_details[id]}/picture",
-        :country => user_details['hometown']['name'].split.last.strip,
+        :country => user_details['hometown']['name'].split.last.strip, #TODO: update each user loging that private information, it returns city not country
         :last_known_lat => params[:post][:lat],
         :last_known_long => params[:post][:long],
         :last_seen_time => Time.now

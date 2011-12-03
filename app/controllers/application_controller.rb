@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE #TODO: remove it to enable ssl v3 
+  
   protect_from_forgery
   
   before_filter(:init_fb)
