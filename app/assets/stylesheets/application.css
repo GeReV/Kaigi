@@ -77,12 +77,23 @@ body {
 }
 header {
 }
+header h1 {
+	line-height: 70px;
+	margin: 0 0 10px 0;
+}
 header a,
 header a:link,
 header a:visited {
 	color: #FFC64C;
 	text-decoration: none;
 	text-shadow: 0 3px 3px rgba(0, 0, 0, 0.5);
+}
+header #hackathon {
+	float: right;
+}
+header #hackathon img {
+	width: 70px;
+	height: 70px;
 }
 #page {
 	background: #6a7b9f;
