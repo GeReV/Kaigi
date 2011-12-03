@@ -15,16 +15,25 @@ class HomeController < ApplicationController
     users = User.where(['last_seen_time > ? AND profile_id <> ?', Time.now - 24.hours, @user_info["id"]])
     posts = Post.where(['created_at > ?', Time.now - 3.hours])
     
-    @response = { 
-      :users => users, 
-      :posts => posts.map {|p| {
+    posts.map! do |p| 
+        hash = {
           :id => p.id,
           :text => p.text,
           :lat => p.lat,
           :long => p.long,
+        }
+        
+        hash.merge!({
           :image_thumb => p.image.url(:thumbnail),
           :image_url => p.image.url(:normal)
-        } } 
+        }) if p.image.file?
+        
+        return hash
+    end
+    
+    @response = { 
+      :users => users, 
+      :posts => posts } 
     }
     
     respond_to do |format|
