@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   def index
     latest = params[:latest].to_i || 0
     
-    @posts = Post.joins(:users).includes(:users).where(['id > ?', latest]).limit(15).order('id DESC')
+    @posts = Post.joins(:user).includes(:user).where(['id > ?', latest]).limit(15).order('id DESC')
     
     respond_with(@posts)
   end

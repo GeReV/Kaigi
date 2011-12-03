@@ -105,12 +105,12 @@
       currentWindowInfo && currentWindowInfo.close();
     });
   
-  $.getJSON('/home/get_users_and_posts', updateMarkers);
-  
-  var interval = window.setInterval(function() {
-    $.getJSON('/posts/?latest=' + $('#updates .post:first').data('post-id'), appendPost);
     $.getJSON('/home/get_users_and_posts', updateMarkers);
-  }, 20 * 1000);
+  
+    var interval = window.setInterval(function() {
+      $.getJSON('/posts/?latest=' + $('#updates .post:first').data('post-id'), appendPost);
+      $.ajax({ url: '/home/get_users_and_posts', dataType: 'json', success: updateMarkers });
+    }, 20 * 1000);
 
   function updateMarkers(users_and_posts) {
     var i, l, user, icon, marker, pos, post;

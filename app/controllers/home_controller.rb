@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   
-  respond_to(:html, :json)
+  respond_to(:json)
   
   def index
     
@@ -31,13 +31,13 @@ class HomeController < ApplicationController
         return hash
     end
     
-    @response = { 
+    response = { 
       :users => users, 
-      :posts => posts } 
+      :posts => posts
     }
     
-    respond_to do |format|
-      format.json { render(:json => @response) }
+    respond_to(response) do |format|
+      format.json { render(:json => @response ) }
     end
   end
   
