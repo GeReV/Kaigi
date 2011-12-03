@@ -221,5 +221,7 @@ var file_input_index = 0;
         $(this).wrap('<div id="file_input_container_'+file_input_index+'"></div>');
         $(this).after('<input type="button" value="Clear" onclick="reset_html(\'file_input_container_'+file_input_index+'\')" />');
     });
+    
+  $('.post .thumbnail').facebox(); 
 });
 
