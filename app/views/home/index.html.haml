@@ -1,18 +1,19 @@
 #map
 #feed
   #post
-    = form_for(@post, :url => { :action => :create, :controller => :posts }, :remote => true) do |f|
+    = form_for(@post, :url => { :action => :create, :controller => :posts }, :remote => true, :html => { "data-type" => :json }) do |f|
       = f.text_area(:text, :size => '50x2')
+      = f.submit('Send')
       = f.file_field(:image, :accept => "image/*")
       = f.hidden_field(:lat, :value => '')
       = f.hidden_field(:long, :value => '')
-      = f.submit('Send')
   #updates
     - @posts.each do |post|
       .post.clearfix
         %a{ :href => post.user.profile_link }
-          %img{ :src => "//graph.facebook.com/#{post.user.profile_id}/picture", :alt => post.user.profile_name }
-        = simple_format(post.text)
+          %img{ :src => post.user.profile_pic, :alt => post.user.profile_name }
+        = post.text
         - if post.image
-          %a.thumbnail{ :href => post.image.url(:normal) }
-            %img{ :src => post.image.url(:thumbnail) }
+          .thumb
+            %a.thumbnail{ :href => post.image.url(:normal) }
+              %img{ :src => post.image.url(:thumbnail) }

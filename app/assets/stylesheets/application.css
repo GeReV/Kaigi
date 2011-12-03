@@ -71,10 +71,27 @@ td { vertical-align: top; }
 /* ==|== primary styles =====================================================
    Author: Amir Grozki & Iliya Guterman
    ========================================================================== */
+
+body {
+	background: #fafafa;
+}
+header {
+}
+header a,
+header a:link,
+header a:visited {
+	color: #FFC64C;
+	text-decoration: none;
+	text-shadow: 0 3px 3px rgba(0, 0, 0, 0.5);
+}
 #page {
+	background: #6a7b9f;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	margin: 0 auto;
-	padding: 1em;
-	width: 1024px;
+	padding: 1em 20px;
+	width: 1020px;
+}
+#content {
 }
 
 #map {
@@ -86,30 +103,100 @@ td { vertical-align: top; }
   height: 600px;
 }
 #feed {
+  background: #9BACD0;
+  border-radius: 5px;
   overflow: hidden;
   padding: 5px;
-  height: 590px;
+  height: 600px;
+  width: 395px;
 }
 #post {
-  border-bottom: 1px solid #551A8B;
   display: none;
   padding-bottom: 5px;
+  height: 80px;
+}
+#post textarea {
+	border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    color: #808080;
+    display: inline-block;
+    font-size: 13px;
+    padding: 5px;
+    width: 325px;
+    height: 40px;
+    -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;
+}
+#post textarea:focus {
+	border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0 none;
+}
+#post input[type=submit] {
+	background-color: #0064CD;
+    background-image: -moz-linear-gradient(center top , #049CDB, #0064CD);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	color: #fff;
+	display: inline-block;
+    font-size: 13px;
+    line-height: 52px;
+    padding: 5px;
+	width: 54px;
+	height: 52px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    -moz-transition: all 0.1s linear 0s;
+}
+#post input[type=submit]:hover {
+	background-position: 0 -15px;
+    color: #fff;
+    text-decoration: none;
+}
+#post input[type=submit]:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 #updates {
-  padding-top: 5px;
-  border-top: 1px solid #999999;
+  background: #fafafa;
+  overflow: auto;
+  padding: 5px;
+  height: 505px;
 }
 .post {
-  
+	padding: 5px 0;
+	border-bottom: 1px solid #9BACD0;
 }
-.post a {
-  display: block;
-  float: left;
-  margin-right: 5px;
+.post > a {
+	display: block;
+	float: left;
+	margin-right: 5px;
 }
-
+.post .thumb {
+	margin-top: 1em;
+}
+.post .thumb a {
+	background: #fafafa;
+	border: 1px solid #ddd;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	float: left;
+	margin-right: 5px;
+	padding: 4px;
+}
+.post .thumb a:hover {
+	border-color: #0069D6;
+    box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
+}
+.post .thumb a img {
+	display: block;
+}
 .fb-login-button {
   clear: both;
+  margin-top: 1em;
+  text-align: center;
 }
 
 

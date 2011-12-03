@@ -64,9 +64,13 @@
   
   $('form').bind('ajax:success', function(e, result) {
     if (user_info && user_info.id && user_info.name) {
-      var post = $('<div class="post clearfix"><img src="//graph.facebook.com/' + user_info.id + '/picture" alt="' + user_info.name + '" />' + result.text + '</div>');
+      var post = $('<div class="post clearfix"><a href="' + result.user.profile_link + '"><img src="//graph.facebook.com/' + user_info.id + '/picture" alt="' + user_info.name + '" /></a>' + result.text + '</div>');
+        
+      if (result.image_thumb && result.image_url) {
+        post.append('<div class="thumb"><a href="' + result.image_url + '"><img src="' + result.image_thumb + '" alt="" /></a></div>');
+      }
       
-      $('#post_text').val('');
+      $('#post_text, #post_image').val('');
             
       post.hide().prependTo($('#updates')).slideDown('slow');
     }

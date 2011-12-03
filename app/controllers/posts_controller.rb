@@ -20,12 +20,22 @@ class PostsController < ApplicationController
     
     if request.xhr? || remotipart_submitted?
     
-    @post = Post.new(params[:post])
-    @post.user = @user
-    
+      @post = Post.new(params[:post])
+      @post.user = @user
+      
       if (@post.save)
+        
+        post = {
+          :user => @post.user,
+          :text => @post.text,
+          :lat => @post.lat,
+          :long => @post.long,
+          :image_thumb => @post.image.url(:thumbnail),
+          :image_url => @post.image.url(:normal)
+        }
+        
         respond_with(@post) do |format|
-          format.json { render(:json => @post) }
+          format.json { render(:json => post) }
         end
       end
     end
