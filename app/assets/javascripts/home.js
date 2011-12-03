@@ -108,7 +108,7 @@
   $.getJSON('/home/get_users_and_posts', updateMarkers);
   
   var interval = window.setInterval(function() {
-    $.getJSON('/posts/index/?latest=' + $('#updates .post:first').data('post-id'), appendPost);
+    $.getJSON('/posts/?latest=' + $('#updates .post:first').data('post-id'), appendPost);
     $.getJSON('/home/get_users_and_posts', updateMarkers);
   }, 20 * 1000);
 
