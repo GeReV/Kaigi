@@ -3,7 +3,7 @@
   var user_info, user_marker, currentWindowInfo, markersArray = [];
   
   var myOptions = {
-    zoom: 11,
+    zoom: 10,
     center: new google.maps.LatLng(32.066667, 34.783333),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   },
@@ -29,7 +29,18 @@
       if (navigator.geolocation) {    
         //watchId = navigator.geolocation.watchPosition(function(position) {
           
-          var position = { coords: { latitude: 32.066667, longitude: 34.783333 }},
+          var temp_city_array = [
+            ['Tel Aviv', '32.067', '34.767'],
+            ['Ramat Hasharon', '32.147', '34.842'],
+            ['Bat Yam', '32.023', '34.75'],
+            ['Holon', '32.011', '34.772'],
+            ['Petach Tikva', '32.0849', '34.8884'],
+            ['Rishon Le Zion', '31.964', '34.804']
+          ];
+          
+          var city = temp_city_array[Math.round(Math.random() * temp_city_array.length)];
+          
+          var position = { coords: { latitude: city[1], longitude: city[2] }},
           
               pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
           
@@ -99,7 +110,7 @@
   var interval = window.setInterval(function() {
     $.getJSON('/posts/index/?latest=' + $('#updates .post:first').data('post-id'), appendPost);
     $.getJSON('/home/get_users_and_posts', updateMarkers);
-  }, 60 * 1000);
+  }, 20 * 1000);
 
   function updateMarkers(users_and_posts) {
     var i, l, user, icon, marker, pos, post;
