@@ -29,10 +29,15 @@ class PostsController < ApplicationController
           :user => @post.user,
           :text => @post.text,
           :lat => @post.lat,
-          :long => @post.long,
-          :image_thumb => @post.image.url(:thumbnail),
-          :image_url => @post.image.url(:normal)
+          :long => @post.long
         }
+        
+        if @post.image
+          post.merge!({          
+            :image_thumb => @post.image.url(:thumbnail),
+            :image_url => @post.image.url(:normal)
+          })
+        end
         
         respond_with(@post) do |format|
           format.json { render(:json => post) }

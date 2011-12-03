@@ -7,3 +7,4 @@ tmp/
 *.pyc
 *.pyo
 
+public/system

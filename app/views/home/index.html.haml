@@ -13,7 +13,12 @@
         %a{ :href => post.user.profile_link }
           %img{ :src => post.user.profile_pic, :alt => post.user.profile_name }
         = post.text
-        - if post.image
+        - if post.image.file?
           .thumb
-            %a.thumbnail{ :href => post.image.url(:normal) }
+            %a.thumbnail{ :class => :poplight, :href => "#?w=500", :rel => :popup_location_image }
               %img{ :src => post.image.url(:thumbnail) }
+
+
+%div{:id => :popup_location_image, :class => :popup_block}
+  %p asdasd
+  %p ddddddddddd
