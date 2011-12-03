@@ -1,6 +1,6 @@
 (function(window, document) {
   
-  var user_info, user_marker;
+  var user_info, user_marker, currentWindowInfo, markersArray = [];
   
   var myOptions = {
     zoom: 11,
@@ -63,24 +63,51 @@
   };
   
   $('form').bind('ajax:success', function(e, result) {
-    if (user_info && user_info.id && user_info.name) {
-      var post = $('<div class="post clearfix"><a href="' + result.user.profile_link + '"><img src="//graph.facebook.com/' + user_info.id + '/picture" alt="' + user_info.name + '" /></a>' + result.text + '</div>');
-        
-      if (result.image_thumb && result.image_url) {
-        post.append('<div class="thumb"><a href="' + result.image_url + '"><img src="' + result.image_thumb + '" alt="" /></a></div>');
-      }
-      
-      $('#post_text, #post_image').val('');
-            
-      post.hide().prependTo($('#updates')).slideDown('slow');
-    }
+    appendPost(result);
   });
   
-  $.getJSON('/home/get_users', function(result) {
-    var i, l, user, icon, marker, pos;
+  $('#updates')
+    .delegate('.post:not(.active)[data-post-id]', 'click', function() {
+      var self = $(this),
+          marker,
+          windowInfo;
+      
+      self.parent().children().removeClass('active');
+      
+      self.addClass('active');
+      
+      marker = self.data('marker');
+      windowInfo = self.data('windowInfo');
+      
+      marker && map.setCenter(marker.getPosition());
+      
+      currentWindowInfo && currentWindowInfo.close();
+      
+      if (windowInfo) {
+        windowInfo.open(map, marker);
+        currentWindowInfo = windowInfo;
+      }
+    })
+    .delegate('.post.active', 'click', function() {
+      var self = $(this).removeClass('active');
+            
+      currentWindowInfo && currentWindowInfo.close();
+    });
+  
+  $.getJSON('/home/get_users_and_posts', updateMarkers);
+  
+  var interval = window.setInterval(function() {
+    $.getJSON('/posts/index/?latest=' + $('#updates .post:first').data('post-id'), appendPost);
+    $.getJSON('/home/get_users_and_posts', updateMarkers);
+  }, 60 * 1000);
+
+  function updateMarkers(users_and_posts) {
+    var i, l, user, icon, marker, pos, post;
     
-    for (i = 0, l = result.length; i < l; i++) {
-      user = result[i];
+    deleteOverlays();
+    
+    for (i = 0, l = users_and_posts.users.length; i < l; i++) {
+      user = users_and_posts.users[i];
       
       icon = new google.maps.MarkerImage(user.profile_pic,
               new google.maps.Size(23, 23), // size
@@ -97,8 +124,65 @@
         title: user.name,
         zIndex: 2
       });
+      
+      markersArray.push(marker);
     }
-  });
+    
+    for (i = 0, l = users_and_posts.posts.length; i < l; i++) {
+      (function() {
+        var marker, pos, post, post_update, windowInfo;
+        
+        post = users_and_posts.posts[i];
+      
+        pos = new google.maps.LatLng(post.lat, post.long);
+        
+        marker = new google.maps.Marker({
+          'clickable': true,
+          'map': map,
+          'position': pos,
+          'zIndex': 2,
+        });
+        
+        markersArray.push(marker);
+        
+        windowInfo = new google.maps.InfoWindow({
+          'content': '<img style="float: left; margin: 0 5px 5px 0;" src="' + post.image_thumb + '" alt="" />' + post.text
+        });
+        
+        $('#updates .post[data-post-id=' + post.id + ']').data({
+          'marker': marker,
+          'windowInfo': windowInfo
+        });
+        
+        google.maps.event.addListener(marker, 'click', function() {
+          windowInfo.open(map, marker);
+        });
+      }());
+    }
+  }
+  
+  function appendPost(result) {
+    if (user_info && user_info.id && user_info.name) {
+      var post = $('<div class="post clearfix"><a href="' + result.user.profile_link + '"><img src="//graph.facebook.com/' + user_info.id + '/picture" alt="' + user_info.name + '" /></a>' + result.text + '</div>');
+        
+      if (result.image_thumb && result.image_url) {
+        post.append('<div class="thumb"><a href="' + result.image_url + '"><img src="' + result.image_thumb + '" alt="" /></a></div>');
+      }
+      
+      $('#post_text, #post_image').val('');
+            
+      post.hide().prependTo($('#updates')).slideDown('slow');
+    }
+  }
+  
+  function deleteOverlays() {
+    if (markersArray) {
+      for (i in markersArray) {
+        markersArray[i].setMap(null);
+      }
+      markersArray.length = 0;
+    }
+  }
     
   function setPositionFields(position) {
     $('#post_lat').val(position.coords.latitude);

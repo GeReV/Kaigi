@@ -166,8 +166,15 @@ header a:visited {
   height: 505px;
 }
 .post {
-	padding: 5px 0;
 	border-bottom: 1px solid #9BACD0;
+	cursor: pointer;
+	padding: 5px 0;
+}
+.post:hover {
+	background: #D5DEF0;
+}
+.post.active {
+	background: #9BACD0;
 }
 .post > a {
 	display: block;

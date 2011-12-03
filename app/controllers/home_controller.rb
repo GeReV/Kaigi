@@ -11,10 +11,24 @@ class HomeController < ApplicationController
     @post = Post.new
   end
   
-  def get_users
-    @users = User.where(['last_seen_time > ? AND profile_id <> ?', Time.now - 3.hours, @user_info["id"]])
-    respond_with(@users) do |format|
-      format.json { render(:json => @users) }
+  def get_users_and_posts
+    users = User.where(['last_seen_time > ? AND profile_id <> ?', Time.now - 24.hours, @user_info["id"]])
+    posts = Post.where(['created_at > ?', Time.now - 3.hours])
+    
+    @response = { 
+      :users => users, 
+      :posts => posts.map {|p| {
+          :id => p.id,
+          :text => p.text,
+          :lat => p.lat,
+          :long => p.long,
+          :image_thumb => p.image.url(:thumbnail),
+          :image_url => p.image.url(:normal)
+        } } 
+    }
+    
+    respond_to do |format|
+      format.json { render(:json => @response) }
     end
   end
   

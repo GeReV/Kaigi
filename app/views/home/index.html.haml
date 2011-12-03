@@ -9,7 +9,7 @@
       = f.hidden_field(:long, :value => '')
   #updates
     - @posts.each do |post|
-      .post.clearfix
+      .post.clearfix{ "data-post-id" => post.id }
         %a{ :href => post.user.profile_link }
           %img{ :src => post.user.profile_pic, :alt => post.user.profile_name }
         = post.text

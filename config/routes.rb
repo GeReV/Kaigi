@@ -1,6 +1,6 @@
 Kaigi::Application.routes.draw do
   get "home/index"
-  get "home/get_users"
+  get "home/get_users_and_posts"
   post "home/update_location"
   
   resources :posts, :only => [:create, :index]
