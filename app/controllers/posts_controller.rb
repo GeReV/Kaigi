@@ -33,7 +33,7 @@ class PostsController < ApplicationController
           :long => @post.long
         }
         
-        if @post.image
+        if @post.image.file?
           post.merge!({          
             :image_thumb => @post.image.url(:thumbnail),
             :image_url => @post.image.url(:normal)

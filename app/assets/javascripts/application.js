@@ -7,3 +7,4 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require home.js
+//= require facebox.js
