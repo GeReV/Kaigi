@@ -25,6 +25,7 @@ class HomeController < ApplicationController
           :image_thumb => p.image.url(:thumbnail),
           :image_url => p.image.url(:normal)
 <<<<<<< HEAD
+<<<<<<< HEAD
         }) if p.image.file?
         
         return hash
@@ -33,6 +34,9 @@ class HomeController < ApplicationController
     response = { 
       :users => users, 
       :posts => posts
+=======
+        } } 
+>>>>>>> parent of 9e8b679... Finishing touches before demo
 =======
         } } 
 >>>>>>> parent of 9e8b679... Finishing touches before demo
